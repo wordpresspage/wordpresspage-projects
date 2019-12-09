@@ -1,0 +1,922 @@
+====================================================
+중요 코드
+한글 깨짐 방지 코드
+<head>
+  <meta charset="utf-8">
+
+HTML5의 경우 다음 코드를 <head> 태그 안에 삽입하여 페이지 언어셋이 utf-8임을
+브라우저에 알립니다. (기본)
+
+<meta charset="utf-8">
+
+XHTML의 경우 다음 코드를 <head> 태그 안에 삽입하면 됩니다.
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+->
+<script type="text/javascript" src="bundled.js" charset="UTF-8"></script>
+->
+중요
+usual web browser font size = 16px
+so 16px x 1.875rem = 30px
+->
+====================================================
+> node -v
+
+> create folder node-test
+> goto cd node-test directory
+> create test.js file
+
+> touch "test.js"
+========================
+코드입력
+========================
+console.log("hello world");
+
+console.log(2+2);
+
+var fs = require('fs');
+
+fs.writeFile(__dirname + "/index.html", "<h1>html is great</h1>", function(error) {
+   if (error) {
+       return console.log(error);
+   } else {
+       return console.log("축하합니다.")
+   }
+})
+
+==========================
+> node test.js
+==========================
+
+var fs = require('fs');
+var https = require('https');
+
+fs.writeFile(__dirname + "/index.html", "<h1>html is great</h1>", function(error) {
+   if (error) {
+       return console.log(error);
+   } else {
+       return console.log("축하합니다.")
+   }
+})
+
+var https = require('http');
+var myPhotoLocation = 'http://db.kookje.co.kr/news2000/photo/2019/0916/L20190916.99002014239i1.jpg'
+
+https.get(myPhotoLocation, function (response) {
+    response.pipe(fs.createWriteStream(__dirname + "/mygirl.jpg"))
+
+})
+
+==========================================
+제11강
+==========================================
+npm = node package manager
+
+>create folder npm-test
+>$ cd '/c/Users/Dae Seop Shin/Documents/_local-sites/npm-test'
+>npm install lodash
+
+>delete node_modules folder
+
+>npm init -y
+->
+$ npm init -y
+Wrote to C:\Users\Dae Seop Shin\Documents\_local-sites\npm-test\package.json:
+
+{
+  "name": "npm-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+->
+-> install lodash again
+
+>npm install lodash
+
+==================================
+package.json 에 추가된 코드
+
+->
+  "dependencies": {
+    "lodash": "^4.17.15"
+  }
+->
+===================================
+>npm install normalize.css
+
+->코드 추가됨
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "normalize.css": "^8.0.1"
+->
+->delete node_modules folder again
+->install packages again
+
+>npm install
+=======================================
+제13강
+=======================================
+->create scripts folder to
+->C:\Users\Dae Seop Shin\Documents\_local-sites\app\assets
+->create App.js to
+->C:\Users\Dae Seop Shin\Documents\_local-sites\app\assets\scripts
+->open App.js
+->
+alert("hello, this is just a test.")
+->
+->open terminal alt + f12
+
+>npm install webpack webpack-cli --save-dev
+
+->cd C:\Users\Dae Seop Shin\Documents\_local-sites
+->create file webpack.config.js
+->put code
+module.exports = {
+    entry: './app/assets/scripts/App.js'
+}
+
+->goto open package.json
+->code
+ "scripts": {
+    "dev": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+->open up terminal alt + f12
+
+>npm run dev
+->created dist>main.js
+->js 생성 파일 위치 변경
+->open webpack.config.js
+->put code
+const path = require('path')
+
+module.exports = {
+    entry: './app/assets/scripts/App.js',
+    output: {
+        filename: 'bundled.js',
+        path: path.resolve(__dirname, 'app')
+    },
+    mode: 'development'
+}
+->
+->delete dist folder
+
+>npm run dev
+
+-> C:\Users\Dae Seop Shin\Documents\_local-sites\app
+-> bundled.js 생성됨
+-> open index.html
+-> 코드 추가
+  <script src="bundled.js"></script>
+</body>
+</html>
+->open index.html on web browser
+
+->test again
+->open App.js
+->edit code
+->
+alert("hello, wordpresspage.com 안녕하세요!!!")
+->
+
+>npm run dev
+->한글이 깨져 보인다.
+->수정 연구
+
+->webpack.config.js 수정
+->
+const path = require('path')
+
+module.exports = {
+    entry: './app/assets/scripts/App.js',
+    output: {
+        filename: 'bundled.js',
+        path: path.resolve(__dirname, 'app')
+    },
+    mode: 'development',
+    watch: true
+}
+->
+
+>npm run dev
+-> to stop
+>ctrl + c
+
+===========================================
+제15강
+===========================================
+-> cd app>assets
+-> create folder styles
+-> cd styles
+-> create file styles.css
+-> open styles.css
+-> put code
+body {
+    color: orange;
+}
+->open up app>assets>scripts>App.js
+->
+import '../styles/styles.css'
+alert('hello, wordpresspage.com win win again!!!')
+->
+->install css packages
+
+>npm install css-loader style-loader --save-dev
+
+->open up webpack.config.js
+->add up code
+
+mode: 'development',
+    watch: true,
+    module: {
+        rules: [
+            {
+                test: /\.css$/i,
+                use: ['css-loader']
+            }
+        ]
+    }
+
+->
+
+>npm run dev
+
+->open up bundled.js
+->ctrl + f
+->find 'orange'
+->ok test on web browser
+
+->add up this code to webpack.config.js
+    test: /\.css$/i,
+    use: ['style-loader', 'css-loader']
+->
+->ctrl + c to stop
+
+>npm run dev
+
+->see the result on browser
+->good to go
+->edit styles.css
+body {
+    color: blue;
+}
+->see the result changed
+->delete alert('hello, wordpresspage.com win win again!!!') on App.js
+->see the result
+
+->add up postCSS
+
+>ctrl + c
+>npm install postcss-loader --save-dev
+
+->add up 3 postCSSPlugins
+
+>npm install postcss-simple-vars postcss-nested autoprefixer --save-dev
+
+->open up webpack.config.js
+->edit code
+const path = require('path')
+
+const postCSSPlugins = [
+   require('postcss-simple-vars'),
+   require('postcss-nested'),
+   require('autoprefixer')
+]
+
+module.exports = {
+    entry: './app/assets/scripts/App.js',
+    output: {
+        filename: 'bundled.js',
+        path: path.resolve(__dirname, 'app')
+    },
+    mode: 'development',
+    watch: true,
+    module: {
+        rules: [
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader', {loader: 'postcss-loader', options: {plugins: postCSSPlugins}}]
+            }
+        ]
+    }
+->
+->open styles.css
+->edit code
+body {
+    color: rebeccapurple;
+}
+
+$mainBlue: #2f5572;
+
+.large-hero {
+    h2 {
+        color: $mainBlue;
+    }
+}
+->
+
+>npm run dev
+
+->see the result and good to go
+
+=================================================
+제17강
+=================================================
+
+->open styles.css
+->delete all code
+->add code
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333333;
+}
+->npm run dev to test
+
+->create folder modules in styles folder
+->create file _large-hero.css in modules folder
+->add code to styles.css
+@import 'modules/_large-hero';
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333333;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+->put @import 'modules/_large-hero'; code on top not bottom
+
+->install package
+
+>npm install postcss-import --save-dev
+
+->open webpack.config.js
+->add code
+const postCSSPlugins = [
+   require('postcss-import'),
+   require('postcss-simple-vars'),
+   require('postcss-nested'),
+   require('autoprefixer')
+]
+->
+->open _large-hero.css
+->add code
+.large-hero {
+    color: purple;
+    position: relative;
+}
+->test
+->npm run dev
+->delete color: purple;
+
+->create folder base in styles folder
+->create file _global.css in base folder
+->cut this code on styles.css and paste the code in _global.css
+->
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333333;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+->go to styles.css
+->put import code
+@import "normalize.css";
+@import "base/_global";
+@import "modules/_large-hero";
+->see the left and right margin
+->go to index.html
+->create div class "large-hero__text-content"
+    <div class="large-hero__text-content">
+      <h1>Your clarity.</h1>
+      <h2>One trip away.</h2>
+      <p>We create soul restoring journeys that inspire you to be you.</p>
+      <p><a href="#">Get Started Today</a></p>
+    </div>
+->go to _large-hero.css
+->add code
+.large-hero__text-content {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+->
+=================================================
+제18강 BEM
+B = Block
+E = Element
+M = Modifier
+=================================================
+->open index.html
+->add class
+-><h1 class="large-hero__title">Your clarity.</h1>
+
+->open _large-hero.css
+->add code
+.large-hero__title {
+    font-weight: 300;
+    color: #2f5572;
+    font-size: 4.8rem;
+}
+->add class in index.html
+<h2 class="large-hero__subtitle">One trip away.</h2>
+->edit _large-hero.css
+===============================================
+->nested css 사용
+===============================================
+->
+.large-hero {
+    position: relative;
+
+    &__text-content {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    &__title {
+        font-weight: 300;
+        color: #2f5572;
+        font-size: 4.8rem;
+    }
+
+    &__subtitle {
+        font-weight: 300;
+        color: #2f5572;
+        font-size: 2.9rem;
+    }
+
+}
+->
+=================================================
+제19강
+=================================================
+->margin 0 to
+&__title {
+        font-weight: 300;
+        color: #2f5572;
+        font-size: 4.8rem;
+        margin: 0;
+    }
+
+    &__subtitle {
+        font-weight: 300;
+        color: #2f5572;
+        font-size: 2.9rem;
+        margin: 0;
+    }
+->add class
+-><p class="large-hero__description">We create soul restoring journeys that inspire you to be you.</p>
+->add rule &__description
+==================================================
+중요
+usual web browser font size = 16px
+so 16px x 1.875rem = 30px
+==================================================
+&__description {
+        color: #ffffff;
+        font-size: 1.875rem;
+        font-weight: 100;
+        text-shadow: 2px 2px 0 rgba(0,0,0, .1);
+        max-width: 30rem;
+        margin-left: auto;
+        margin-right: auto;
+     }
+->make btn styles
+->make file _btn.css in modules folder
+->put code
+.btn {
+    background-color: #2f5572;
+    color: #ffffff;
+}
+->create .btn class
+<a href="#" class="btn">Get in Touch</a>
+->import _btn.css to styles.css
+->using variables btn color $mainBlue: #2f5572
+$mainBlue: #2f5572;
+
+.btn {
+    background-color: $mainBlue;
+    color: #ffffff;
+}
+->
+->make _variables.css in base folder
+->add code $mainBlue: #2f5572;
+->delete code $mainBlue: #2f5572; in _btn.css
+->import _variables.css on styles.css
+@import "normalize.css";
+@import "base/_global";
+@import "base/_variables.css";
+@import "modules/_large-hero";
+@import "modules/_btn.css";
+->
+->change color #2f5572 to $mainBlue on _large-hero.css
+->add code to _btn.css
+.btn {
+    background-color: $mainBlue;
+    color: #ffffff;
+    text-decoration: none;
+    padding: .75rem 1.2rem;
+    display: inline-block;
+}
+->add class <a href="#" class="btn btn--orange">Get in Touch</a>
+->add code on _btn.css
+.btn {
+    background-color: $mainBlue;
+    color: #ffffff;
+    text-decoration: none;
+    padding: .75rem 1.2rem;
+    display: inline-block;
+
+    &--orange {
+        background-color: #d59541;
+     }
+}
+->make #d59541 to variables
+->$mainOrange: #d59541; on _variables.css
+->edit code on _btn.css
+    &--orange {
+        background-color: $mainOrange;
+     }
+->
+->add class
+<p><a href="#" class="btn btn--orange btn--large">오늘 지금 시작하세요!!!</a></p>
+->add code to _btn.css
+
+================================================
+제20강
+webpack-dev-server = wifi network
+smartphone, tablet, notebook, pc
+================================================
+>npm install webpack-dev-server --save-dev
+->edit webpack.config.js
+module.exports = {
+    entry: './app/assets/scripts/App.js',
+    output: {
+        filename: 'bundled.js',
+        path: path.resolve(__dirname, 'app')
+    },
+    devServer: {
+        contentBase: path.join(__dirname, 'app'),
+        hot: true,
+        port: 3000
+    },
+    mode: 'development',
+    module: {
+        rules: [
+            {
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader', {loader: 'postcss-loader', options: {plugins: postCSSPlugins}}]
+            }
+        ]
+    }
+->edit package.json
+  "scripts": {
+    "dev": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+->edit App.js
+if (module.hot) {
+    module.hot.accept()
+}
+->
+>npm run dev
+->go to localhost:3000
+->edit webpack.config.js
+    devServer: {
+        before: function(app, server) {
+            server._watch('./app/**/*.html')
+        },
+->ctrl + c
+->npm run dev
+->edit webpack.config.js
+        port: 3000,
+        host: '0.0.0.0'
+->ctrl + c
+->npm run dev
+->find out local ip address
+->ipconfig
+->find out ipv6 address
+->go to 192.168.35.225:3000
+===============================================
+제21강
+responsive web design
+smartphone > tablet > notebook, pc
+because of the traffics
+mobile first web design
+===============================================
+->edit _large-hero.css
+&__title {
+        font-weight: 300;
+        color: $mainBlue;
+        margin: 0;
+        font-size: 1.1rem;
+
+        @media (min-width: 530px) {
+            font-size: 4.8rem;
+        }
+->install mixin
+->ctrl + c, npm install postcss-mixins --save-dev
+->edit webpack.config.js & install postcss-mixins plugin
+const postCSSPlugins = [
+   require('postcss-import'),
+   require('postcss-mixins'),
+   require('postcss-simple-vars'),
+   require('postcss-nested'),
+   require('autoprefixer')
+]
+->npm run dev
+->create & open _mixins.css in base folder
+->put code
+@define-mixin atSmall {
+    @media (min-width: 530px) {
+        @mixin-content;
+    }
+}
+
+@define-mixin atMedium {
+    @media (min-width: 800px) {
+        @mixin-content ;
+    }
+}
+
+@define-mixin atLarge {
+    @media (min-width: 1200px) {
+        @mixin-content ;
+    }
+}
+->import _mixins.css on styles.css
+->edit _large-hero.css code
+&__title {
+        font-weight: 300;
+        color: $mainBlue;
+        margin: 0;
+        font-size: 1.1rem;
+
+        @mixin atSmall {
+            font-size: 2rem;
+        }
+
+        @mixin atMedium {
+            font-size: 3.2rem;
+        }
+
+        @mixin atLarge {
+            font-size: 4.8rem;
+        }
+    }
+->
+==============================================
+제22강
+Mobile First & responsive image
+Mobil user should download small size images
+==============================================
+->example #1
+->open dog/index.html
+->edit code
+  <picture>
+    <source srcset="images/dog-crop-large.jpg" media="(min-width: 1200px)">
+    <source srcset="images/dog-crop-medium.jpg" media="(min-width: 760px)">
+    <img src="images/dog-crop-small.jpg" alt="Puppy in the sand.">
+  </picture>
+->example #2(quickly load)
+  <img srcset="images/dog-resolution-small.jpg 570w,
+  images/dog-resolution-medium.jpg 1200w,
+  images/dog-resolution-large.jpg 1920w" alt="Puppy in the sand">
+->
+->go to app/index.html
+->smallest image first
+    <picture>
+      <source srcset="assets/images/hero--large.jpg 1920w, assets/images/hero--large-hi-dpi.jpg 3840w" media="(min-width: 1380px)">
+      <source srcset="assets/images/hero--medium.jpg 1380w, assets/images/hero--medium-hi-dpi.jpg 2760w" media="(min-width: 990px)">
+      <source srcset="assets/images/hero--small.jpg 990w, assets/images/hero--small-hi-dpi.jpg 1980w" media="(min-width: 640px)">
+      <img srcset="assets/images/hero--smaller.jpg 640w, assets/images/hero--smaller-hi-dpi.jpg 1280w" alt="Coastal view of ocean and mountains">
+    </picture>
+
+==============================================
+제23강 Tips for Testing Responsive
+==============================================
+-> -i version of images for testing
+    <picture>
+      <source srcset="assets/images/hero--large-i.jpg 1920w, assets/images/hero--large-hi-dpi-i.jpg 3840w" media="(min-width: 1380px)">
+      <source srcset="assets/images/hero--medium-i.jpg 1380w, assets/images/hero--medium-hi-dpi-i.jpg 2760w" media="(min-width: 990px)">
+      <source srcset="assets/images/hero--small-i.jpg 990w, assets/images/hero--small-hi-dpi-i.jpg 1980w" media="(min-width: 640px)">
+      <img srcset="assets/images/hero--smaller-i.jpg 640w, assets/images/hero--smaller-hi-dpi-i.jpg 1280w" alt="Coastal view of ocean and mountains">
+    </picture>
+==============================================
+24. Creating Reusable Blocks
+==============================================
+->create _wrapper.css to modules folder
+->open _wrapper.css
+.wrapper {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+->import _wrapper.css on styles.css
+->use class .wrapper
+->open index.html
+->동영상 보고 따라하기
+
+================================================
+29. Git Brnaches = a version of a project
+================================================
+->still running npm run dev
+->open up new terminal > click + icon
+->현재 branch 접속을 본다.
+> git branch
+->* master (마스터 혼자)
+> git status
+> git add -A (add all)
+> git status
+-> git reset app/index.html (unstaging index.html)
+->create new branch
+>git add package-lock.json (staging package-lock.json)
+>git commit -m "20191208 first wordpresspage project package 축하합니다!!!"
+
+=========================================================================
+C:\Users\Dae Seop Shin\Documents\_local-sites>git commit -m "20191208 first wordpresspage project packag
+e 축하합니다!!!"
+[master 61bef49] 20191208 first wordpresspage project package 축하합니다!!!
+ 94 files changed, 6967 insertions(+)
+ create mode 100644 .gitignore
+ create mode 100644 .idea/.gitignore
+ create mode 100644 .idea/_local-sites.iml
+ create mode 100644 .idea/misc.xml
+ create mode 100644 .idea/modules.xml
+ create mode 100644 .idea/vcs.xml
+ create mode 100644 app/assets/images/first-trip-hi-dpi-i.jpg
+ create mode 100644 app/assets/images/first-trip-hi-dpi.jpg
+ create mode 100644 app/assets/images/first-trip-i.jpg
+ create mode 100644 app/assets/images/first-trip.jpg
+ create mode 100644 app/assets/images/hero--large-hi-dpi-i.jpg
+ create mode 100644 app/assets/images/hero--large-hi-dpi.jpg
+ create mode 100644 app/assets/images/hero--large-i.jpg
+ create mode 100644 app/assets/images/hero--large.jpg
+ create mode 100644 app/assets/images/hero--medium-hi-dpi-i.jpg
+ create mode 100644 app/assets/images/hero--medium-hi-dpi.jpg
+ create mode 100644 app/assets/images/hero--medium-i.jpg
+ create mode 100644 app/assets/images/hero--medium.jpg
+ create mode 100644 app/assets/images/hero--small-hi-dpi-i.jpg
+ create mode 100644 app/assets/images/hero--small-hi-dpi.jpg
+ create mode 100644 app/assets/images/hero--small-i.jpg
+ create mode 100644 app/assets/images/hero--small.jpg
+ create mode 100644 app/assets/images/hero--smaller-hi-dpi-i.jpg
+ create mode 100644 app/assets/images/hero--smaller-hi-dpi.jpg
+ create mode 100644 app/assets/images/hero--smaller-i.jpg
+ create mode 100644 app/assets/images/hero--smaller.jpg
+ create mode 100644 app/assets/images/icons/clear-view-escapes.svg
+ create mode 100644 app/assets/images/icons/comment.svg
+ create mode 100644 app/assets/images/icons/facebook.svg
+ create mode 100644 app/assets/images/icons/fire.svg
+ create mode 100644 app/assets/images/icons/globe.svg
+ create mode 100644 app/assets/images/icons/instagram.svg
+ create mode 100644 app/assets/images/icons/mail.svg
+ create mode 100644 app/assets/images/icons/rain.svg
+ create mode 100644 app/assets/images/icons/star.svg
+ create mode 100644 app/assets/images/icons/twitter.svg
+ create mode 100644 app/assets/images/icons/wifi.svg
+ create mode 100644 app/assets/images/icons/youtube.svg
+ create mode 100644 app/assets/images/our-start-hi-dpi-i.jpg
+ create mode 100644 app/assets/images/our-start-hi-dpi.jpg
+ create mode 100644 app/assets/images/our-start-i.jpg
+ create mode 100644 app/assets/images/our-start-landscape-hi-dpi-i.jpg
+ create mode 100644 app/assets/images/our-start-landscape-hi-dpi.jpg
+ create mode 100644 app/assets/images/our-start-landscape-i.jpg
+ create mode 100644 app/assets/images/our-start-landscape-small-i.jpg
+ create mode 100644 app/assets/images/our-start-landscape-small.jpg
+ create mode 100644 app/assets/images/our-start-landscape.jpg
+ create mode 100644 app/assets/images/our-start-portrait-hi-dpi-i.jpg
+ create mode 100644 app/assets/images/our-start-portrait-hi-dpi.jpg
+ create mode 100644 app/assets/images/our-start-portrait-i.jpg
+ create mode 100644 app/assets/images/our-start-portrait.jpg
+ create mode 100644 app/assets/images/our-start.jpg
+ create mode 100644 app/assets/images/testimonial-cat-hi-dpi-i.jpg
+ create mode 100644 app/assets/images/testimonial-cat-hi-dpi.jpg
+ create mode 100644 app/assets/images/testimonial-cat-i.jpg
+ create mode 100644 app/assets/images/testimonial-cat.jpg
+ create mode 100644 app/assets/images/testimonial-jane-hi-dpi-i.jpg
+ create mode 100644 app/assets/images/testimonial-jane-hi-dpi.jpg
+ create mode 100644 app/assets/images/testimonial-jane-i.jpg
+ create mode 100644 app/assets/images/testimonial-jane.jpg
+ create mode 100644 app/assets/images/testimonial-john-hi-dpi-i.jpg
+ create mode 100644 app/assets/images/testimonial-john-hi-dpi.jpg
+ create mode 100644 app/assets/images/testimonial-john-i.jpg
+ create mode 100644 app/assets/images/testimonial-john.jpg
+ create mode 100644 app/assets/images/testimonials-bg.jpg
+ create mode 100644 app/assets/scripts/App.js
+ create mode 100644 app/assets/styles/base/_global.css
+ create mode 100644 app/assets/styles/base/_mixins.css
+ create mode 100644 app/assets/styles/base/_variables.css
+ create mode 100644 app/assets/styles/modules/_btn.css
+ create mode 100644 app/assets/styles/modules/_generic-content-container.css
+ create mode 100644 app/assets/styles/modules/_headline.css
+ create mode 100644 app/assets/styles/modules/_large-hero.css
+ create mode 100644 app/assets/styles/modules/_page-section.css
+ create mode 100644 app/assets/styles/modules/_row.css
+ create mode 100644 app/assets/styles/modules/_wrapper.css
+ create mode 100644 app/assets/styles/styles.css
+ create mode 100644 app/bundled.js
+ create mode 100644 app/dog/images/dog-crop-large.jpg
+ create mode 100644 app/dog/images/dog-crop-medium.jpg
+ create mode 100644 app/dog/images/dog-crop-small.jpg
+ create mode 100644 app/dog/images/dog-resolution-large.jpg
+ create mode 100644 app/dog/images/dog-resolution-medium.jpg
+ create mode 100644 app/dog/images/dog-resolution-small.jpg
+ create mode 100644 app/dog/index.html
+ create mode 100644 app/index.html
+ create mode 100644 node-test/index.html
+ create mode 100644 node-test/mygirl.jpg
+ create mode 100644 node-test/test.js
+ create mode 100644 npm-test/package-lock.json
+ create mode 100644 npm-test/package.json
+ create mode 100644 package-lock.json
+ create mode 100644 package.json
+ create mode 100644 webpack.config.js
+
+C:\Users\Dae Seop Shin\Documents\_local-sites>
+=========================================================================
+>git branch count-to-ten
+>git branch
+  count-to-ten
+* master
+>git checkout count-to-ten
+Switched to branch 'count-to-ten'
+>git checkout master
+>git push origin master (github 로 파일 올리기)
+
+=====================================================
+제31강 Git Branch Merging Practice
+=====================================================
+->ctrl + c = stop npm run dev
+>git status
+>git add -A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
