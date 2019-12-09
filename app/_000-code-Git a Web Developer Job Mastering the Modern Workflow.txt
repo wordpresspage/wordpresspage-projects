@@ -869,9 +869,25 @@ Switched to branch 'count-to-ten'
 ->ctrl + c = stop npm run dev
 >git status
 >git add -A
+>git commit -m "finished lesson 031 축하합니다. 기운냅시다!!!"
+>git check master
+>clear
+>git merge our-features --no-ff
+>git push origin master
+->see github.com
 
+======================================================
+32 - Styling Testimonials (Part 1)
+======================================================
+>create branch
+->git checkout -b testimonials
+Dae Seop Shin@DESKTOP-JUDCTTT MINGW64 ~/Documents/_local-sites (master)
+$ git checkout -b testimonials
+Switched to a new branch 'testimonials'
 
-
+Dae Seop Shin@DESKTOP-JUDCTTT MINGW64 ~/Documents/_local-sites (testimonials)
+$
+->
 
 
 
