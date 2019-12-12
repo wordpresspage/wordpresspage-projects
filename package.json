@@ -17,6 +17,7 @@
   "devDependencies": {
     "autoprefixer": "^9.7.3",
     "css-loader": "^3.2.1",
+    "postcss-hexrgba": "^2.0.0",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "postcss-mixins": "^6.2.3",
@@ -26,5 +27,13 @@
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wordpresspage/wordpresspage-projects.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wordpresspage/wordpresspage-projects/issues"
+  },
+  "homepage": "https://github.com/wordpresspage/wordpresspage-projects#readme"
 }

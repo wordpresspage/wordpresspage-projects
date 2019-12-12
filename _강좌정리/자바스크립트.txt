@@ -1,0 +1,83 @@
+/* 제 39강 lesson example code below this line */
+
+/*console.log("안녕, 내 이름은 신대섭이고 좋아하는 색상은 검정색이야!");
+console.log("안녕, 내 이름은 신소연이고 좋아하는 색상은 흰색이야!");
+
+function person (name, favColor) {
+    console.log("안녕, 내 이름은 " + name + "이고 좋아하는 색상은 " + favColor + "이야!");
+}
+
+let shin01Name = "신대섭"
+let shin01FavColor = "검정색"
+
+person(shin01Name, shin01FavColor);
+
+var shin01 = {
+    name: "신대섭",
+    favoriteColor: "검정색"
+}
+
+person(shin01.name, shin01.favoriteColor);
+person("신소연", "흰색");
+
+var shin01 = {
+    name: "신대섭",
+    favoriteColor: "검정색",
+    greet: function() {
+        console.log("안녕! " + shin01.name + " 호색은 " + shin01.favoriteColor + "이냐?");
+    }
+}
+
+shin01.greet();
+
+=========================================
+중요 기본 create object
+
+
+function Person(fullName, favColor) {
+    this.name = fullName;
+    this.favoriteColor = favColor;
+    this.greet = function() {
+        console.log("안녕! " + this.name + " 호색은 " + this.favoriteColor + "이냐?");
+    }
+}
+
+var shin01 = new Person("신대섭", "검정색");
+shin01.greet();
+
+var shin02 = new Person("신소연", "흰색");
+shin02.greet();
+============================================
+ */
+ /* 클래스 신택스 */
+
+ class Person {
+     constructor(name, favoriteColor) {
+         this.name = name;
+         this.favoriteColor = favoriteColor;
+     }
+
+     greet() {
+         console.log("안녕! " + this.name + " 호색은 " + this.favoriteColor + "이냐?");
+     }
+
+ }
+
+ =================================================
+확장 클래스
+==================================================
+class Adult extends Person {
+    payTaxes() {
+        console.log(this.name + "은 밀린 세금이 없습니다.");
+    }
+}
+
+var shin01 = new Person("신대섭", "검정색 그리고 흰색");
+shin01.greet();
+
+var shin02 = new Adult("신소연", "초록색 그리고 흰색");
+shin02.greet();
+shin02.payTaxes();
+===================================================
+
+
